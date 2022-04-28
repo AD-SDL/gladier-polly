@@ -24,9 +24,12 @@ The simple polly flow:
 
 ## Usage
 
-change `local_endpoint_id = 'cde22510-5de7-11ec-9b5c-f9dfb1abb183'` with your globus endpoint id.
+On `polly_client.py` change `local_endpoint_id = 'cde22510-5de7-11ec-9b5c-f9dfb1abb183'` with your globus endpoint id.
 
+For single client:
 `polly_client.py path/to/file.json` is a single shot client that creates a flow based on one single json file
+
+For file watcher:
 `polly_watcher.py --dir path/to/folder` creates a filesystem watchdog on a given folder and invokes `polly_client` when new json files arrive.
 
 
