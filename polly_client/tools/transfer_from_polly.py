@@ -16,7 +16,6 @@ class PollyJsonOut(GladierBaseTool):
                         {
                             'source_path.$': '$.input.transfer_source_path',
                             'destination_path.$': '$.input.transfer_destination_path',
-                            'recursive.$': '$.input.transfer_recursive',
                         }
                     ]
                 },
@@ -29,7 +28,6 @@ class PollyJsonOut(GladierBaseTool):
 
     flow_input = {
         'transfer_sync_level': 'checksum',
-        'transfer_recursive': False,
     }
     required_input = [
         'transfer_source_path',

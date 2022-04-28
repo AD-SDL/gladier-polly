@@ -13,6 +13,8 @@ def gather_polybot_metadata(proc_dir = None, json_name = None, **data):
     if not os.path.exists(json_file):
         return 'error!'
 
+    metadata = data.get('metadata',{})
+
     GENERAL_METADATA = {
         "creators": [
             {
@@ -54,7 +56,7 @@ def gather_polybot_metadata(proc_dir = None, json_name = None, **data):
     return pilot
 
 @generate_flow_definition
-class GatherMetadata(GladierBaseTool):
+class GatherPolybotMetadata(GladierBaseTool):
     funcx_functions = [gather_polybot_metadata]
     required_input = [
         'proc_dir',
