@@ -1,13 +1,13 @@
 from gladier import GladierBaseTool
 
 
-class SimpleTransfer(GladierBaseTool):
+class PollyJsonOut(GladierBaseTool):
 
     flow_definition = {
         'Comment': 'Transfer a file or directory in Globus',
-        'StartAt': 'SimpleTransfer',
+        'StartAt': 'PollyJsonOut',
         'States': {
-            'SimpleTransfer': {
+            'PollyJsonOut': {
                 'Comment': 'Transfer a file or directory in Globus',
                 'Type': 'Action',
                 'ActionUrl': 'https://actions.automate.globus.org/transfer/transfer',
@@ -22,7 +22,7 @@ class SimpleTransfer(GladierBaseTool):
                         }
                     ]
                 },
-                'ResultPath': '$.SimpleTransfer',
+                'ResultPath': '$.PollyJsonOut',
                 'WaitTime': 600,
                 'End': True
             },
@@ -31,7 +31,7 @@ class SimpleTransfer(GladierBaseTool):
 
     flow_input = {
         'simple_transfer_sync_level': 'checksum',
-        'simple_transfer_recursive': True,
+        'simple_transfer_recursive': False,
 
     }
     required_input = [
