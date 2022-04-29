@@ -21,8 +21,8 @@ from gladier_tools.publish import Publish
 class PollyClient(GladierBaseClient):
     gladier_tools = [
         PollyJsonOut,
-        Thermo,
-        CreateImages,
+        # Thermo,
+        # CreateImages,
         GatherPolybotMetadata,
         Publish
     ]
@@ -42,7 +42,7 @@ def run_poly_flow(json_path):
 
     ##Remote Transfer Variables
     remote_endpoint_id = 'b59a9a91-835d-47d2-88bc-3250f989fc93' 
-    remote_json_file = os.path.join(proc_base,json_base,json_name)
+    remote_json_file = os.path.join('/',proc_base,json_base,json_name)
 
     ##Remote Funcx Variables
     funcx_endpoint_compute = 'e449e8b8-e114-4659-99af-a7de06feb847'
@@ -71,7 +71,7 @@ def run_poly_flow(json_path):
             'search_project': 'polybot',
             'source_globus_endpoint': remote_endpoint_id,
             'groups': [],
-            'destination':'/portal',
+            'dest':'/portal',
             'pilot': {},
         }
     }
@@ -80,7 +80,7 @@ def run_poly_flow(json_path):
     flow_run = poly_client.run_flow(flow_input=flow_input, label=client_run_label)
 
     print(client_run_label)
-    print('https://app.globus.org/runs/' + flow_run['action_id'])
+    print('    https://app.globus.org/runs/' + flow_run['action_id'])
     print('')
 
 def arg_parse():

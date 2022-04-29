@@ -8,7 +8,7 @@ def create_images(proc_dir = None, json_name = None, **data):
 
     with open(json_name,'r') as f:
         data = json.load(f)
-    
+        
     return data
 
 @generate_flow_definition

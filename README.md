@@ -32,8 +32,8 @@ For single client:
 For file watcher:
 `polly_watcher.py --dir path/to/folder` creates a filesystem watchdog on a given folder and invokes `polly_client` when new json files arrive.
 
+## TODO
 
-## TODO:
 * Create GCP at polly machine.
 * update `local_polly_endpoint`
 

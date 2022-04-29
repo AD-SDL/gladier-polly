@@ -5,6 +5,7 @@ from gladier import GladierBaseTool, generate_flow_definition
 def gather_polybot_metadata(proc_dir = None, json_name = None, **data):
     import json
     import os
+    import datetime 
 
     os.chdir(proc_dir)
 
@@ -15,44 +16,34 @@ def gather_polybot_metadata(proc_dir = None, json_name = None, **data):
 
     metadata = data.get('metadata',{})
 
-    GENERAL_METADATA = {
-        "creators": [
-            {
-                "creatorName": "Polybotters"
-            }
-        ],
-        "publicationYear": "2019",
-        "publisher": "Argonne National Lab",
-        "resourceType": {
-            "resourceType": "Dataset",
-            "resourceTypeGeneral": "Dataset"
+    json_base = json_name.replace('.json','')
+
+
+    metadata.update({
+        "creators": [{"creatorName": "Polybotters"}],
+        'description': f'{json_base}: Automated data processing.',
+        'title': json_base,
+        'publicationYear': f'{datetime.datetime.now().year}',
+        'resourceType': {
+            'resourceType': 'Dataset',
+            'resourceTypeGeneral': 'Dataset'
         },
-        "subjects": [
-            {
-                "subject": "beamline"
-            }
-        ],
-    }
+        "subjects": [{"subject": "SDL Polybot"}],
+    })
 
-    def gather_json(json_file):
-        with open(json_file, 'r') as f:
-            hframe = json.load(f)
-
+    with open(json_file, 'r') as f:
+        hframe = json.load(f)                
         metadata.update(hframe)
-        # metafilename, _ = os.path.splitext(os.path.basename(json_file))
-        metadata = GENERAL_METADATA.copy()
+    os.unlink(json_file) #Necessary?
 
-        return metadata
-
-    # Generate metadata
-    metadata = gather_json(json_file)
-    pilot = data.get('pilot','')
+    pilot = data.get('pilot',{})
     # metadata passed through from the top level takes precedence. This allows for
     # overriding fields through $.input
     metadata.update(pilot.get('metadata', {}))
 
     pilot['metadata'] = metadata
     pilot['groups'] = data.get('groups', [])
+    pilot['destination'] = data.get('dest','/')
     return pilot
 
 @generate_flow_definition
@@ -66,13 +57,14 @@ class GatherPolybotMetadata(GladierBaseTool):
 
 
 if __name__ == '__main__':
-    proc_dir = '/eagle/APSDataAnalysis/POLLY'
-    json_name = 'test_data.json'
+
     data = {
-        'proc_dir': proc_dir,
-        'json_name': json_name,
+        'proc_dir': '.',
+        'json_name': 'test_data.json',
         'metadata': {},
         'groups': []
     }
+
     from pprint import pprint
-    pprint(gather_polybot_metadata(proc_dir, json_name, **data))
+    pprint(gather_polybot_metadata(**data))
+
